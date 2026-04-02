@@ -463,72 +463,72 @@ export default function Home() {
           {/* Pricing Grid */}
           <div className="pricing-grid">
             {/* Single Pricing Card */}
-            <div className="pricing-card-popular rounded-[32px] p-6 sm:p-8">
+            <div className="pricing-card-popular rounded-[32px] p-5 sm:p-6">
               <div className="pricing-content">
                 {/* Header */}
-                <div className="text-center mb-6">
-                  <div className="flex justify-center mb-4">
+                <div className="text-center mb-4">
+                  <div className="flex justify-center mb-3">
                     <span className="savings-badge">
                       <i className="fas fa-gift"></i>
                       1 MES GRATIS
                     </span>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-black text-white mb-3">
+                  <h3 className="text-lg sm:text-xl font-black text-white mb-2">
                     Plan Emprendedor
                   </h3>
-                  <div className="flex items-baseline justify-center gap-2 mb-2">
-                    <span className="text-2xl sm:text-3xl text-white/70 line-through font-bold">RD$500</span>
+                  <div className="flex items-baseline justify-center gap-1.5 mb-1">
+                    <span className="text-xl sm:text-2xl text-white/70 line-through font-bold">RD$500</span>
                     <div className="flex items-baseline gap-1">
-                      <span className="price-number text-5xl sm:text-6xl font-black">RD$0</span>
-                      <span className="text-white/80 text-base sm:text-lg font-medium">/mes</span>
+                      <span className="price-number text-4xl sm:text-5xl font-black">RD$0</span>
+                      <span className="text-white/80 text-xs sm:text-sm font-medium">/mes</span>
                     </div>
                   </div>
-                  <p className="text-white/90 text-xs sm:text-sm">
+                  <p className="text-white/90 text-[10px] sm:text-xs">
                     Después: <span className="font-bold">RD$500/mes</span>
                   </p>
                 </div>
 
                 {/* Features */}
-                <div className="space-y-3 mb-6 flex-grow">
+                <div className="space-y-2 mb-4 flex-grow">
                   <div className="pricing-check">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-check text-white text-[10px]"></i>
+                    <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-check text-white text-[8px]"></i>
                     </div>
                     <span>Productos ilimitados</span>
                   </div>
                   <div className="pricing-check">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-check text-white text-[10px]"></i>
+                    <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-check text-white text-[8px]"></i>
                     </div>
                     <span>Catálogo sin restricciones</span>
                   </div>
                   <div className="pricing-check">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-check text-white text-[10px]"></i>
+                    <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-check text-white text-[8px]"></i>
                     </div>
                     <span>Pedidos por WhatsApp</span>
                   </div>
                   <div className="pricing-check">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-check text-white text-[10px]"></i>
+                    <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-check text-white text-[8px]"></i>
                     </div>
                     <span>Enlace personalizado</span>
                   </div>
                   <div className="pricing-check">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-check text-white text-[10px]"></i>
+                    <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-check text-white text-[8px]"></i>
                     </div>
                     <span>Estadísticas en tiempo real</span>
                   </div>
                   <div className="pricing-check">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-check text-white text-[10px]"></i>
+                    <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-check text-white text-[8px]"></i>
                     </div>
                     <span>Soporte prioritario 24/7</span>
                   </div>
                   <div className="pricing-check">
-                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <i className="fas fa-check text-white text-[10px]"></i>
+                    <div className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <i className="fas fa-check text-white text-[8px]"></i>
                     </div>
                     <span>0% comisiones</span>
                   </div>
@@ -537,13 +537,13 @@ export default function Home() {
                 {/* CTA Button */}
                 <a
                   href="#registro"
-                  className="btn-secondary w-full block text-center font-bold text-sm py-3"
+                  className="btn-secondary w-full block text-center font-bold text-xs py-2.5"
                 >
                   <i className="fas fa-rocket mr-1"></i>
                   Comenzar gratis
                 </a>
                 
-                <p className="text-xs text-white/70 text-center mt-3">
+                <p className="text-[10px] text-white/70 text-center mt-2">
                   1 mes gratis · Luego RD$500/mes
                 </p>
               </div>

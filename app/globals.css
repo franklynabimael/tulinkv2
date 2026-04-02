@@ -406,12 +406,12 @@
 }
 
 .pricing-check i {
-  @apply text-white text-xs flex-shrink-0;
+  @apply text-white text-[10px] flex-shrink-0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .pricing-check span {
-  @apply text-sm font-medium;
+  @apply text-xs font-medium leading-tight;
 }
 
 /* Price animation */
@@ -425,7 +425,7 @@
 
 /* Badge de ahorro */
 .savings-badge {
-  @apply inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold;
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold;
   background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
   color: #1a1a1a;
   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
