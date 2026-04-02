@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Colors - TuLink Design System */
+  --brand-primary: #2ECC71; /* Verde Esmeralda */
+  --brand-primary-dark: #27ae60;
+  --brand-primary-light: #58d68d;
+  
+  /* Alert Colors */
+  --alert-error: #EF4444;
+  --alert-error-dark: #dc2626;
+  
+  /* Surface Colors */
+  --surface-white: #FFFFFF;
+  --surface-bg: #F9FAFB;
+  
+  /* Text Colors */
+  --text-primary: #111827;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  
+  /* Border Radius */
+  --radius-btn: 12px;
+  --radius-card: 24px;
+  --radius-input: 12px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-dark: var(--brand-primary-dark);
+  --color-brand-primary-light: var(--brand-primary-light);
+  --color-alert-error: var(--alert-error);
+  --color-surface-white: var(--surface-white);
+  --color-surface-bg: var(--surface-bg);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom Utilities */
+@utility squircle {
+  @apply rounded-2xl;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility card-hover {
+  @apply transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl;
+}
+
+@utility btn-primary {
+  @apply bg-[#2ECC71] text-white px-6 py-3 rounded-[12px] font-semibold 
+         hover:bg-[#27ae60] transition-all duration-300 
+         active:scale-95 min-h-[48px];
+}
+
+@utility btn-secondary {
+  @apply border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-[12px] 
+         font-semibold hover:border-[#2ECC71] hover:text-[#2ECC71] 
+         transition-all duration-300 min-h-[48px];
+}
+
+@utility input-interactive {
+  @apply w-full px-4 py-3 rounded-[12px] border border-gray-300 
+         focus:border-[#2ECC71] focus:ring-2 focus:ring-[#2ECC71]/20 
+         outline-none transition-all duration-200 min-h-[48px];
+}
+
+@utility card-surface {
+  @apply bg-white rounded-[24px] shadow-sm border border-gray-100;
+}
+
+@utility icon-squircle {
+  @apply w-14 h-14 rounded-2xl flex items-center justify-center 
+         bg-[#2ECC71]/10 text-[#2ECC71];
+}
+
+/* Mobile Navigation Drawer */
+.drawer-overlay {
+  @apply fixed inset-0 bg-black/50 z-40 lg:hidden;
+}
+
+.drawer-content {
+  @apply fixed top-0 right-0 h-full w-80 bg-white z-50 
+         transform transition-transform duration-300 lg:hidden;
+}
+
+.drawer-open {
+  @apply translate-x-0;
+}
+
+.drawer-closed {
+  @apply translate-x-full;
+}
+
+/* Mockup Phone Styles */
+.phone-mockup {
+  @apply relative w-[280px] h-[580px] bg-gray-900 rounded-[40px] 
+         border-4 border-gray-800 shadow-2xl overflow-hidden;
+}
+
+.phone-screen {
+  @apply w-full h-full bg-white rounded-[36px] overflow-hidden;
+}
+
+/* Hero Typography */
+.hero-headline {
+  @apply text-[32px] sm:text-[40px] md:text-[48px] lg:text-[52px] 
+         font-bold leading-tight;
+}
+
+/* Subdomain Builder */
+.subdomain-builder {
+  @apply flex flex-col sm:flex-row items-stretch sm:items-center gap-0 
+         bg-white rounded-[12px] overflow-hidden shadow-lg 
+         max-w-lg mx-auto;
+}
+
+.subdomain-input {
+  @apply flex-1 px-4 py-3 sm:py-4 border-0 outline-none 
+         focus:ring-2 focus:ring-[#2ECC71]/20 min-h-[48px];
+}
+
+.subdomain-suffix {
+  @apply px-4 py-3 sm:py-4 bg-[#2ECC71]/10 text-[#2ECC71] 
+         font-semibold flex items-center justify-center min-h-[48px];
+}
+
+/* Benefits Grid */
+.benefits-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8;
+}
+
+/* Flow Steps */
+.flow-steps {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8;
 }
