@@ -72,6 +72,13 @@ export default function Home() {
               </a>
             </div>
 
+            {/* Mobile Navigation Links */}
+            <div className="hidden md:flex lg:hidden items-center gap-6">
+              <a href="#precios" className="text-gray-600 hover:text-[#2ECC71] transition-colors font-medium">
+                Precios
+              </a>
+            </div>
+
             {/* CTA Button */}
             <div className="hidden lg:block">
               <a href="#registro" className="btn-primary inline-flex items-center gap-2">
@@ -403,6 +410,196 @@ export default function Home() {
                 Los clientes seleccionan productos y el pedido llega estructurado 
                 directamente a tu WhatsApp.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== PRECIOS ==================== */}
+      <section id="precios" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+              Planes simples y transparentes
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Elige el plan perfecto para tu negocio · Sin sorpresas
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Plan Gratis */}
+            <div className="card-surface p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-gray-200 text-gray-700 px-4 py-1 rounded-bl-2xl font-semibold text-sm">
+                Para empezar
+              </div>
+              
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Plan Básico</h3>
+                <div className="flex items-baseline justify-center gap-1 mb-2">
+                  <span className="text-5xl font-bold text-gray-900">RD$0</span>
+                  <span className="text-gray-600">/mes</span>
+                </div>
+                <p className="text-gray-600">Ideal para probar TuLink</p>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Hasta 10 productos</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Catálogo básico</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Pedidos por WhatsApp</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Enlace personalizado .tulink.do</span>
+                </div>
+                <div className="flex items-start gap-3 opacity-50">
+                  <i className="fas fa-times text-gray-400 mt-1"></i>
+                  <span className="text-gray-400">Estadísticas de ventas</span>
+                </div>
+                <div className="flex items-start gap-3 opacity-50">
+                  <i className="fas fa-times text-gray-400 mt-1"></i>
+                  <span className="text-gray-400">Soporte prioritario</span>
+                </div>
+                <div className="flex items-start gap-3 opacity-50">
+                  <i className="fas fa-times text-gray-400 mt-1"></i>
+                  <span className="text-gray-400">Personalización avanzada</span>
+                </div>
+              </div>
+
+              <a
+                href="#registro"
+                className="btn-secondary w-full block text-center"
+              >
+                Comenzar gratis
+              </a>
+            </div>
+
+            {/* Plan Premium */}
+            <div className="card-surface p-8 relative overflow-hidden border-2 border-[#2ECC71] shadow-lg shadow-[#2ECC71]/10">
+              <div className="absolute top-0 right-0 bg-[#2ECC71] text-white px-4 py-1 rounded-bl-2xl font-semibold text-sm">
+                Más popular
+              </div>
+              
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Plan Emprendedor</h3>
+                <div className="flex items-baseline justify-center gap-1 mb-2">
+                  <span className="text-5xl font-bold text-gray-900">RD$500</span>
+                  <span className="text-gray-600">/mes</span>
+                </div>
+                <p className="text-gray-600">Todo ilimitado para crecer</p>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700 font-semibold">Productos ilimitados</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Catálogo completo</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Pedidos por WhatsApp</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Enlace personalizado .tulink.do</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Estadísticas de ventas</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Soporte prioritario 24/7</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <i className="fas fa-check text-[#2ECC71] mt-1"></i>
+                  <span className="text-gray-700">Personalización avanzada</span>
+                </div>
+              </div>
+
+              <a
+                href="#registro"
+                className="btn-primary w-full block text-center"
+              >
+                Comenzar prueba de 1 mes
+              </a>
+              <p className="text-xs text-gray-500 text-center mt-3">
+                1 mes gratis · Luego RD$500/mes
+              </p>
+            </div>
+          </div>
+
+          {/* Feature Comparison */}
+          <div className="mt-16 card-surface overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Característica</th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">Básico</th>
+                    <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">Emprendedor</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  <tr>
+                    <td className="px-6 py-4 text-gray-700">Productos</td>
+                    <td className="px-6 py-4 text-center text-gray-600">10</td>
+                    <td className="px-6 py-4 text-center text-gray-900 font-semibold">Ilimitados</td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 text-gray-700">Pedidos por WhatsApp</td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 text-gray-700">Enlace personalizado</td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 text-gray-700">Estadísticas de ventas</td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-times text-gray-300"></i></td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 text-gray-700">Soporte prioritario</td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-times text-gray-300"></i></td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 text-gray-700">Personalización avanzada</td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-times text-gray-300"></i></td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 text-gray-700">Sin comisiones por venta</td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                    <td className="px-6 py-4 text-center"><i className="fas fa-check text-[#2ECC71]"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Guarantee */}
+          <div className="mt-12 text-center">
+            <div className="inline-flex items-center gap-3 bg-[#2ECC71]/10 px-6 py-4 rounded-2xl">
+              <i className="fas fa-shield-heart text-[#2ECC71] text-2xl"></i>
+              <div className="text-left">
+                <p className="font-semibold text-gray-900">Garantía de satisfacción</p>
+                <p className="text-sm text-gray-600">Cancela cuando quieras · Sin preguntas</p>
+              </div>
             </div>
           </div>
         </div>
