@@ -123,7 +123,7 @@ export default function Home() {
     const value = e.target.value.replace(/[^a-zA-Z0-9-]/g, "").toLowerCase();
     setSubdomain(value);
     setFormData({ ...formData, businessName: value });
-    
+
     // Clear error when user types
     if (touchedFields.businessName && formErrors.businessName) {
       setFormErrors({ ...formErrors, businessName: undefined });
@@ -150,7 +150,7 @@ export default function Home() {
         if (value.replace(/\D/g, "").length < 7) return "El número es muy corto";
         return undefined;
       default:
-      return undefined;
+        return undefined;
     }
   };
 
@@ -164,7 +164,7 @@ export default function Home() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
+
     // Real-time validation if field was touched
     if (touchedFields[name]) {
       const error = validateField(name, value);
@@ -175,7 +175,7 @@ export default function Home() {
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate all fields
     const newErrors: FormErrors = {};
     (Object.keys(formData) as Array<keyof typeof formData>).forEach((key) => {
@@ -190,7 +190,7 @@ export default function Home() {
         email: true,
         phone: true,
       });
-      
+
       // Focus first error field
       const firstErrorField = Object.keys(newErrors)[0];
       document.getElementById(firstErrorField)?.focus();
@@ -848,9 +848,8 @@ export default function Home() {
                   aria-label="Cambiar período de facturación"
                 >
                   <div
-                    className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${
-                      billingPeriod === "annual" ? "translate-x-8" : "translate-x-0"
-                    }`}
+                    className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${billingPeriod === "annual" ? "translate-x-8" : "translate-x-0"
+                      }`}
                   ></div>
                 </button>
                 <span className={`text-sm font-bold ${billingPeriod === "annual" ? "text-gray-900" : "text-gray-500"}`}>
@@ -937,21 +936,18 @@ export default function Home() {
               </div>
 
               {/* Plan Pro - RD$500/mes - Popular */}
-              <div className="pricing-card-popular rounded-[32px] p-6 sm:p-8 relative">
+              <div className="pricing-card-popular rounded-[32px] p-6 sm:p-8 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-2 border-gray-100">
                 {/* Popular Badge */}
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-                  <span className="savings-badge text-xs sm:text-sm px-4 py-2">
-                    <i className="fas fa-star text-sm"></i>
-                    MÁS POPULAR
-                  </span>
+
                 </div>
 
                 <div className="pricing-content">
                   <div className="text-center mb-6">
                     <div className="flex justify-center mb-4">
-                      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-white/20 text-white">
-                        <i className="fas fa-bolt"></i>
-                        PARA CRECER
+                      <span className="savings-badge text-xs sm:text-sm px-4 py-2">
+                        <i className="fas fa-star text-sm"></i>
+                        MÁS POPULAR
                       </span>
                     </div>
                     <h3 className="text-xl font-black text-white mb-3">
@@ -1203,9 +1199,8 @@ export default function Home() {
                       {faq.question}
                     </span>
                     <i
-                      className={`fas fa-chevron-down text-[#2ECC71] transition-transform duration-300 flex-shrink-0 ml-4 ${
-                        openFAQ === index ? "rotate-180" : ""
-                      }`}
+                      className={`fas fa-chevron-down text-[#2ECC71] transition-transform duration-300 flex-shrink-0 ml-4 ${openFAQ === index ? "rotate-180" : ""
+                        }`}
                     ></i>
                   </button>
                   {openFAQ === index && (
@@ -1276,11 +1271,10 @@ export default function Home() {
                       onChange={handleInputChange}
                       onBlur={() => handleFieldBlur("businessName")}
                       placeholder="Ej: Boutique María"
-                      className={`input-interactive text-sm sm:text-base ${
-                        formErrors.businessName && touchedFields.businessName
+                      className={`input-interactive text-sm sm:text-base ${formErrors.businessName && touchedFields.businessName
                           ? "border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]/15"
                           : ""
-                      }`}
+                        }`}
                       required
                       aria-invalid={!!(formErrors.businessName && touchedFields.businessName)}
                       aria-describedby={formErrors.businessName && touchedFields.businessName ? "businessName-error" : undefined}
@@ -1306,11 +1300,10 @@ export default function Home() {
                       onChange={handleInputChange}
                       onBlur={() => handleFieldBlur("email")}
                       placeholder="tu@correo.com"
-                      className={`input-interactive text-sm sm:text-base ${
-                        formErrors.email && touchedFields.email
+                      className={`input-interactive text-sm sm:text-base ${formErrors.email && touchedFields.email
                           ? "border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]/15"
                           : ""
-                      }`}
+                        }`}
                       required
                       aria-invalid={!!(formErrors.email && touchedFields.email)}
                       aria-describedby={formErrors.email && touchedFields.email ? "email-error" : undefined}
@@ -1336,11 +1329,10 @@ export default function Home() {
                       onChange={handleInputChange}
                       onBlur={() => handleFieldBlur("phone")}
                       placeholder="+1 (809) 000-0000"
-                      className={`input-interactive text-sm sm:text-base ${
-                        formErrors.phone && touchedFields.phone
+                      className={`input-interactive text-sm sm:text-base ${formErrors.phone && touchedFields.phone
                           ? "border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]/15"
                           : ""
-                      }`}
+                        }`}
                       required
                       aria-invalid={!!(formErrors.phone && touchedFields.phone)}
                       aria-describedby={formErrors.phone && touchedFields.phone ? "phone-error" : undefined}

@@ -191,12 +191,11 @@ html {
 .input-interactive[aria-invalid="true"],
 .input-interactive.border-error {
   border-color: var(--alert-error);
-  focus:border-[#EF4444];
-  focus:ring-[#EF4444]/15;
 }
 
 .input-interactive[aria-invalid="true"]:focus,
 .input-interactive.border-error:focus {
+  border-color: #EF4444;
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
 }
 
@@ -381,9 +380,9 @@ html {
 
 /* ==================== PRICING CARD ENHANCEMENTS ==================== */
 .pricing-card-popular {
-  @apply relative overflow-hidden h-full max-h-[50vh];
+  @apply relative overflow-hidden h-full;
   background: linear-gradient(135deg, #2ECC71 0%, #27ae60 100%);
-  box-shadow: 
+  box-shadow:
     0 25px 80px rgba(46, 204, 113, 0.3),
     0 0 0 4px rgba(46, 204, 113, 0.1),
     0 0 150px rgba(46, 204, 113, 0.15);
