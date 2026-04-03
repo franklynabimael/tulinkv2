@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Smooth scrolling for entire page */
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   /* Brand Colors - TuLink Design System */
   --brand-primary: #2ECC71;
@@ -169,12 +174,30 @@
 @utility input-interactive {
   @apply w-full px-5 py-4 rounded-[14px] border border-gray-300
          focus:border-[#2ECC71] focus:ring-4 focus:ring-[#2ECC71]/15
-         outline-none transition-all duration-300 min-h-[56px];
+         outline-none transition-all duration-300 min-h-[56px]
+         placeholder:text-gray-400 hover:border-gray-400;
 }
 
 .input-interactive:focus {
   box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.15);
   transform: translateY(-1px);
+}
+
+.input-interactive:hover {
+  border-color: var(--brand-primary);
+}
+
+/* Error state for inputs */
+.input-interactive[aria-invalid="true"],
+.input-interactive.border-error {
+  border-color: var(--alert-error);
+  focus:border-[#EF4444];
+  focus:ring-[#EF4444]/15;
+}
+
+.input-interactive[aria-invalid="true"]:focus,
+.input-interactive.border-error:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
 }
 
 @utility card-surface {
@@ -200,14 +223,14 @@
     inset 0 2px 4px rgba(255, 255, 255, 0.3);
 }
 
-/* Mobile Navigation Drawer */
+/* Mobile Navigation Drawer - Fixed width for small screens */
 .drawer-overlay {
   @apply fixed inset-0 bg-black/60 backdrop-blur-md z-40 lg:hidden;
   animation: fade-in 0.3s ease;
 }
 
 .drawer-content {
-  @apply fixed top-0 right-0 h-full w-80 bg-white z-50
+  @apply fixed top-0 right-0 h-full w-full max-w-xs bg-white z-50
          transform transition-transform duration-500 ease-out lg:hidden;
   box-shadow: -10px 0 60px rgba(0, 0, 0, 0.3);
 }
@@ -225,11 +248,11 @@
   @apply translate-x-full;
 }
 
-/* Mockup Phone Styles - Enhanced with realistic design */
+/* Mockup Phone Styles - Enhanced with realistic design - Fixed overflow */
 .phone-mockup {
-  @apply relative w-[320px] h-[640px] rounded-[50px] overflow-hidden;
+  @apply relative w-[320px] h-[640px] rounded-[50px] overflow-hidden max-w-full;
   background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 50%, #0d0d0d 100%);
-  box-shadow: 
+  box-shadow:
     0 0 0 2px #3d3d3d,
     0 0 0 5px #1a1a1a,
     0 30px 60px -15px rgba(0, 0, 0, 0.6),
@@ -237,6 +260,13 @@
     inset 0 2px 4px rgba(255, 255, 255, 0.1);
   animation: float 7s ease-in-out infinite;
   transform-style: preserve-3d;
+}
+
+@media (max-width: 375px) {
+  .phone-mockup {
+    width: 280px;
+    height: 560px;
+  }
 }
 
 .phone-mockup::before {
@@ -395,7 +425,7 @@
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto;
 }
 
-/* Animated checkmark */
+/* Animated checkmark - Fixed size for better visibility */
 .pricing-check {
   @apply flex items-center gap-2 text-white;
   transition: all 0.3s ease;
@@ -406,12 +436,12 @@
 }
 
 .pricing-check i {
-  @apply text-white text-[10px] flex-shrink-0;
+  @apply text-white text-[12px] sm:text-[14px] flex-shrink-0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .pricing-check span {
-  @apply text-xs font-medium leading-tight;
+  @apply text-sm font-medium leading-tight;
 }
 
 /* Price animation */
@@ -423,12 +453,12 @@
   animation: glow 3s ease-in-out infinite;
 }
 
-/* Badge de ahorro */
+/* Badge de ahorro - Enhanced for better visibility */
 .savings-badge {
-  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold;
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-bold;
   background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
   color: #1a1a1a;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
@@ -754,4 +784,83 @@
   color: var(--brand-primary);
   border: 1px solid rgba(46, 204, 113, 0.2);
   margin-bottom: 1rem;
+}
+
+/* ==================== ADDITIONAL POLISH ==================== */
+
+/* FAQ Accordion enhancements */
+#faq button:focus-visible {
+  @apply outline-none ring-4 ring-[#2ECC71]/20 ring-inset;
+}
+
+/* Testimonial card hover */
+#testimonios .card-surface:hover {
+  @apply bg-gradient-to-br from-white to-[#2ECC71]/10;
+}
+
+/* Value prop item hover already defined, adding base styles */
+.value-prop-item {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full;
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0.05) 100%);
+  border: 1px solid rgba(46, 204, 113, 0.15);
+  transition: all 0.3s ease;
+}
+
+.value-prop-item:hover {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.08) 100%);
+  border-color: rgba(46, 204, 113, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+}
+
+.value-prop-item span {
+  @apply text-sm font-bold;
+  background: linear-gradient(135deg, #2ECC71 0%, #27ae60 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Feature check list styling */
+.feature-check {
+  @apply flex items-center gap-3 text-gray-600;
+}
+
+.feature-check i {
+  @apply text-[#2ECC71] text-sm flex-shrink-0;
+  filter: drop-shadow(0 2px 4px rgba(46, 204, 113, 0.3));
+}
+
+/* Success message animation enhancement */
+#success-message {
+  animation: fade-in-up 0.6s ease-out;
+}
+
+/* Form error text animation */
+[id$="-error"] {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* Loading spinner enhancement */
+.fa-circle-notch.fa-spin {
+  animation: fa-spin 1s linear infinite;
+}
+
+@keyframes fa-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Print styles - hide non-essential elements */
+@media print {
+  nav,
+  footer,
+  .drawer-overlay,
+  .drawer-content {
+    display: none !important;
+  }
 }
