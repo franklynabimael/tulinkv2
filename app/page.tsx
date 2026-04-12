@@ -1167,9 +1167,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ==================== FAQ SECTION (NEW) ==================== */}
-        <section id="faq" className="py-16 sm:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#F9FAFB] relative overflow-x-hidden">
+        {/* ==================== FAQ SECTION ==================== */}
+        <section id="faq" className="py-16 sm:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#F9FAFB]">
           <div className="max-w-3xl mx-auto">
+            {/* Section Header */}
             <div className="text-center mb-12 sm:mb-16">
               <div className="inline-flex items-center gap-2 badge-new mb-6">
                 <i className="fas fa-question"></i>
@@ -1183,38 +1184,50 @@ export default function Home() {
               </p>
             </div>
 
+            {/* FAQ Items */}
             <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="card-surface overflow-hidden transition-all duration-300 hover:shadow-lg"
-                >
-                  <button
-                    onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-[#2ECC71]/20"
-                    aria-expanded={openFAQ === index}
-                    aria-controls={`faq-answer-${index}`}
+              {faqs.map((faq, index) => {
+                const isOpen = openFAQ === index;
+                return (
+                  <div
+                    key={index}
+                    className="bg-white rounded-[24px] border border-gray-100 shadow-lg overflow-hidden"
                   >
-                    <span className="font-bold text-gray-900 text-sm sm:text-base pr-4">
-                      {faq.question}
-                    </span>
-                    <i
-                      className={`fas fa-chevron-down text-[#2ECC71] transition-transform duration-300 flex-shrink-0 ml-4 ${openFAQ === index ? "rotate-180" : ""
-                        }`}
-                    ></i>
-                  </button>
-                  {openFAQ === index && (
-                    <div
-                      id={`faq-answer-${index}`}
-                      className="px-6 pb-5 pt-0 animate-fade-in"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        console.log("FAQ clicked, index:", index, "current open:", openFAQ);
+                        if (openFAQ === index) {
+                          setOpenFAQ(null);
+                        } else {
+                          setOpenFAQ(index);
+                        }
+                      }}
+                      className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-gray-50 transition-colors"
                     >
-                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
+                      <span className="font-bold text-gray-900 text-sm sm:text-base pr-4">
+                        {faq.question}
+                      </span>
+                      <svg
+                        className={`w-5 h-5 flex-shrink-0 text-[#2ECC71] transition-transform duration-300 ml-4 ${isOpen ? "rotate-180" : ""}`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <div className="px-6 pb-5">
+                        <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Contact CTA */}
@@ -1224,7 +1237,7 @@ export default function Home() {
               </p>
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-[#2ECC71] font-bold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2ECC71] rounded px-2 py-1"
+                className="inline-flex items-center gap-2 text-[#2ECC71] font-bold hover:underline"
               >
                 <i className="fas fa-envelope"></i>
                 Contáctanos
