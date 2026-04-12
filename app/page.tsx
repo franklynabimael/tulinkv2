@@ -355,7 +355,7 @@ export default function Home() {
             {/* CTA Button */}
             <div className="hidden lg:block">
               <a
-                href="#registro"
+                href="/registro"
                 className="btn-primary inline-flex items-center gap-2 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#2ECC71]/50"
               >
                 Empezar Gratis
@@ -445,7 +445,7 @@ export default function Home() {
                 FAQ
               </a>
               <a
-                href="#registro"
+                href="/registro"
                 className="btn-primary block text-center focus:outline-none focus-visible:ring-4 focus-visible:ring-[#2ECC71]/50"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -509,7 +509,7 @@ export default function Home() {
 
                 <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
                   <a
-                    href="#registro"
+                    href="/registro"
                     className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base focus:outline-none focus-visible:ring-4 focus-visible:ring-[#2ECC71]/50"
                   >
                     <i className="fas fa-rocket"></i>
@@ -927,7 +927,7 @@ export default function Home() {
 
                 {/* CTA Button */}
                 <a
-                  href="#registro"
+                  href="/registro"
                   className="btn-secondary w-full block text-center font-bold text-sm py-3 focus:outline-none focus-visible:ring-4 focus-visible:ring-gray-400/50"
                 >
                   <i className="fas fa-rocket mr-2"></i>
@@ -1028,7 +1028,7 @@ export default function Home() {
 
                   {/* CTA Button */}
                   <a
-                    href="#registro"
+                    href="/registro"
                     className="btn-secondary w-full block text-center font-bold text-sm py-3 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/50"
                   >
                     <i className="fas fa-rocket mr-2"></i>
@@ -1128,7 +1128,7 @@ export default function Home() {
 
                 {/* CTA Button */}
                 <a
-                  href="#registro"
+                  href="/registro"
                   className="btn-primary w-full block text-center font-bold text-sm py-3 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#2ECC71]/50"
                 >
                   <i className="fas fa-crown mr-2"></i>
