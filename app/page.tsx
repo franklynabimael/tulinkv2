@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Types
 interface FormErrors {
@@ -22,6 +22,22 @@ interface FAQ {
   answer: string;
 }
 
+// Detect currency based on locale (computed outside component to avoid re-calculation)
+function detectInitialCurrency(): { symbol: string; code: string } {
+  try {
+    const userLocale = navigator.language || "es-DO";
+    if (userLocale.includes("US")) return { symbol: "$", code: "USD" };
+    if (userLocale.includes("MX")) return { symbol: "MX$", code: "MXN" };
+    if (userLocale.includes("CO")) return { symbol: "COL$", code: "COP" };
+    if (userLocale.includes("AR")) return { symbol: "AR$", code: "ARS" };
+    if (userLocale.includes("CL")) return { symbol: "CL$", code: "CLP" };
+    // Default: RD$ for Dominican Republic
+    return { symbol: "RD$", code: "DOP" };
+  } catch {
+    return { symbol: "RD$", code: "DOP" };
+  }
+}
+
 export default function Home() {
   const [subdomain, setSubdomain] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,32 +51,11 @@ export default function Home() {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-  const [currency, setCurrency] = useState<{ symbol: string; code: string }>({ symbol: "RD$", code: "DOP" });
+  const [currency] = useState<{ symbol: string; code: string }>(detectInitialCurrency);
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">("monthly");
 
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
-
-  // Detect currency based on locale (can be made configurable)
-  useEffect(() => {
-    try {
-      const userLocale = navigator.language || "es-DO";
-      if (userLocale.includes("US")) {
-        setCurrency({ symbol: "$", code: "USD" });
-      } else if (userLocale.includes("MX")) {
-        setCurrency({ symbol: "MX$", code: "MXN" });
-      } else if (userLocale.includes("CO")) {
-        setCurrency({ symbol: "COL$", code: "COP" });
-      } else if (userLocale.includes("AR")) {
-        setCurrency({ symbol: "AR$", code: "ARS" });
-      } else if (userLocale.includes("CL")) {
-        setCurrency({ symbol: "CL$", code: "CLP" });
-      }
-      // Default: RD$ for Dominican Republic
-    } catch {
-      // Keep default
-    }
-  }, []);
 
   // Focus trap for mobile menu
   useEffect(() => {
@@ -273,17 +268,6 @@ export default function Home() {
       question: "¿El enlace es personalizado?",
       answer: "Sí, tu enlace será tunegocio.tulink.do. Puedes personalizarlo con el nombre de tu negocio para que sea fácil de recordar y compartir.",
     },
-  ];
-
-  // Pricing features
-  const pricingFeatures = [
-    "Productos ilimitados",
-    "Catálogo sin restricciones",
-    "Pedidos por WhatsApp",
-    "Enlace personalizado",
-    "Estadísticas en tiempo real",
-    "Soporte prioritario 24/7",
-    "0% comisiones",
   ];
 
   return (

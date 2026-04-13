@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useState, FormEvent, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth/AuthContext";
 
@@ -10,9 +10,10 @@ interface FormErrors {
   password?: string;
 }
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
-  const { login } = useAuth();
+  const searchParams = useSearchParams();
+  const { login, resetPassword } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,6 +23,11 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [showResetModal, setShowResetModal] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetSubmitting, setResetSubmitting] = useState(false);
+  const [resetSuccess, setResetSuccess] = useState(false);
+  const [resetError, setResetError] = useState<string | null>(null);
 
   // Validate individual field
   const validateField = (name: string, value: string): string | undefined => {
@@ -91,8 +97,44 @@ export default function LoginPage() {
       return;
     }
 
-    // Redirect to dashboard
-    router.push("/dashboard");
+    // Redirect to the page user was trying to access, or dashboard
+    const redirectTo = searchParams.get("redirect") || "/dashboard";
+    router.push(redirectTo);
+  };
+
+  const handleResetPassword = async (e: FormEvent) => {
+    e.preventDefault();
+    setResetError(null);
+    setResetSuccess(false);
+
+    if (!resetEmail.trim()) {
+      setResetError("El correo electrónico es requerido");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(resetEmail)) {
+      setResetError("Ingresa un correo válido");
+      return;
+    }
+
+    setResetSubmitting(true);
+
+    const { error } = await resetPassword(resetEmail);
+
+    setResetSubmitting(false);
+
+    if (error) {
+      setResetError(error.message);
+      return;
+    }
+
+    setResetSuccess(true);
+    setTimeout(() => {
+      setShowResetModal(false);
+      setResetSuccess(false);
+      setResetEmail("");
+    }, 3000);
   };
 
   return (
@@ -163,6 +205,10 @@ export default function LoginPage() {
                 </label>
                 <button
                   type="button"
+                  onClick={() => {
+                    setShowResetModal(true);
+                    setResetEmail(formData.email);
+                  }}
                   className="text-sm text-[#2ECC71] font-semibold hover:underline"
                 >
                   ¿Olvidaste tu contraseña?
@@ -245,6 +291,102 @@ export default function LoginPage() {
           </Link>
         </div>
       </div>
+
+      {/* Reset Password Modal */}
+      {showResetModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-[24px] shadow-2xl max-w-md w-full p-6 sm:p-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">
+                Restablecer contraseña
+              </h2>
+              <button
+                onClick={() => {
+                  setShowResetModal(false);
+                  setResetError(null);
+                  setResetSuccess(false);
+                  setResetEmail("");
+                }}
+                className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all"
+              >
+                <i className="fas fa-times text-gray-600"></i>
+              </button>
+            </div>
+
+            {resetSuccess ? (
+              <div className="text-center">
+                <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-[12px]">
+                  <i className="fas fa-check-circle text-green-500 text-3xl mb-2"></i>
+                  <p className="text-sm text-green-800">
+                    ¡Correo enviado! Revisa tu bandeja de entrada para restablecer tu contraseña.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                {resetError && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-[12px] flex items-start gap-3">
+                    <i className="fas fa-exclamation-circle text-red-500 mt-0.5"></i>
+                    <p className="text-sm text-red-700">{resetError}</p>
+                  </div>
+                )}
+
+                <div>
+                  <label htmlFor="reset-email" className="block text-sm font-semibold text-gray-900 mb-2">
+                    Correo electrónico
+                  </label>
+                  <input
+                    id="reset-email"
+                    type="email"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    className="w-full px-4 py-3 rounded-[12px] border border-gray-300 focus:border-[#2ECC71] focus:ring-2 focus:ring-[#2ECC71]/20 outline-none transition-all"
+                    placeholder="tu@email.com"
+                    required
+                  />
+                </div>
+
+                <p className="text-sm text-gray-600">
+                  Te enviaremos un correo con un enlace para restablecer tu contraseña.
+                </p>
+
+                <button
+                  type="submit"
+                  disabled={resetSubmitting}
+                  className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {resetSubmitting ? (
+                    <>
+                      <i className="fas fa-circle-notch fa-spin"></i>
+                      <span>Enviando...</span>
+                    </>
+                  ) : (
+                    <>
+                      <i className="fas fa-paper-plane"></i>
+                      <span>Enviar correo de restablecimiento</span>
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-[#F9FAFB]">
+        <div className="text-center">
+          <i className="fas fa-circle-notch fa-spin text-4xl text-[#2ECC71] mb-4"></i>
+          <p className="text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
   );
 }

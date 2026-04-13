@@ -1,0 +1,17 @@
+{
+  "name": "TuLink - Tu catálogo virtual, pedidos por WhatsApp",
+  "short_name": "TuLink",
+  "description": "Crea tu catálogo virtual y recibe pedidos directamente por WhatsApp",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#F9FAFB",
+  "theme_color": "#2ECC71",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

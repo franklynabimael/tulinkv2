@@ -1,27 +1,18 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth/AuthContext";
 
 export default function DashboardPage() {
-  const router = useRouter();
   const { user, profile, loading, logout, isTrialActive, trialDaysRemaining } = useAuth();
-
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/login");
-    }
-  }, [user, loading, router]);
 
   const handleLogout = async () => {
     await logout();
-    router.push("/");
+    // AuthContext handles redirect to /login
   };
 
-  // Show loading state
+  // Middleware protects this route - no client-side redirect needed
+  // Show minimal loading while AuthContext initializes
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F9FAFB]">
@@ -33,9 +24,19 @@ export default function DashboardPage() {
     );
   }
 
-  // Redirect handled by useEffect
+  // Should never happen due to middleware protection, but handle gracefully
   if (!user) {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F9FAFB]">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Sesión no encontrada</p>
+          <Link href="/login" className="btn-primary px-6 py-3">
+            <i className="fas fa-sign-in-alt mr-2"></i>
+            Iniciar sesión
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (

@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
-import { signUp, login, logout, getCurrentUser } from '@/lib/auth/auth';
+import { signUp, login, logout, resetPassword } from '@/lib/auth/auth';
 import { SignUpData, LoginData, AuthError } from '@/lib/auth/auth';
 
 interface UserProfile {
@@ -22,6 +22,7 @@ interface AuthContextType {
   signUp: (data: SignUpData) => Promise<{ error: AuthError | null }>;
   login: (data: LoginData) => Promise<{ error: AuthError | null }>;
   logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error: AuthError | null }>;
   isTrialActive: boolean;
   trialDaysRemaining: number;
 }
@@ -34,74 +35,107 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Load initial session
-  useEffect(() => {
-    const loadSession = async () => {
-      const { user, session, profile } = await getCurrentUser();
-      setUser(user);
-      setSession(session);
-      setProfile(profile ?? null);
-      setLoading(false);
-    };
-
-    loadSession();
-  }, []);
-
-  // Listen for auth changes
-  useEffect(() => {
+  const fetchProfile = useCallback(async (userId: string) => {
     const supabase = createClient();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-
-      if (session?.user) {
-        // Fetch profile
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
-        
-        setProfile(profile ?? null);
-      } else {
-        setProfile(null);
-      }
-
-      setLoading(false);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    
+    if (profileError) {
+      console.error('[AuthContext] Error fetching profile:', profileError);
+    }
+    
+    return profile ?? null;
   }, []);
+
+  // Function to handle auth state
+  const handleAuthState = useCallback(async (session: Session | null) => {
+    setSession(session);
+    setUser(session?.user ?? null);
+
+    if (session?.user) {
+      const profile = await fetchProfile(session.user.id);
+      setProfile(profile);
+    } else {
+      setProfile(null);
+    }
+
+    setLoading(false);
+  }, [fetchProfile]);
+
+  // Initialize auth state on mount
+  useEffect(() => {
+    const initializeAuth = async () => {
+      try {
+        const supabase = createClient();
+        
+        // First, get current session
+        const { data: { session } } = await supabase.auth.getSession();
+        await handleAuthState(session);
+
+        // Then subscribe to auth changes for future updates
+        const {
+          data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+          console.log('[AuthContext] Auth state changed:', _event, session?.user?.email);
+          handleAuthState(session);
+        });
+
+        return () => {
+          subscription.unsubscribe();
+        };
+      } catch (error) {
+        console.error('[AuthContext] Error initializing auth:', error);
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
+  }, [handleAuthState]);
 
   // Sign up handler
   const handleSignUp = useCallback(async (data: SignUpData): Promise<{ error: AuthError | null }> => {
-    const { user, error } = await signUp(data);
+    const { user, error, profileError } = await signUp(data);
     if (user) {
-      setUser(user);
+      // Don't manually set user - let the onAuthStateChange handle it
+      console.log('Sign up successful, waiting for auth state change...');
     }
-    return { error };
+    // Return profileError as the main error if it exists
+    return { error: error ?? profileError ?? null };
   }, []);
 
   // Login handler
   const handleLogin = useCallback(async (data: LoginData): Promise<{ error: AuthError | null }> => {
     const { user, error } = await login(data);
     if (user) {
-      setUser(user);
+      // Don't manually set user - let the onAuthStateChange handle it
+      console.log('Login successful, waiting for auth state change...');
     }
     return { error };
   }, []);
 
-  // Logout handler
+  // Logout handler - redirect immediately after clearing state
   const handleLogout = useCallback(async (): Promise<void> => {
-    await logout();
+    // Clear state first
     setUser(null);
     setSession(null);
     setProfile(null);
+
+    try {
+      await logout();
+    } catch (error) {
+      console.error('[AuthContext] Error signing out:', error);
+    } finally {
+      // Always redirect to login regardless of signOut result
+      window.location.href = '/login';
+    }
+  }, []);
+
+  // Reset password handler
+  const handleResetPassword = useCallback(async (email: string): Promise<{ error: AuthError | null }> => {
+    return await resetPassword(email);
   }, []);
 
   // Calculate trial status
@@ -118,6 +152,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signUp: handleSignUp,
     login: handleLogin,
     logout: handleLogout,
+    resetPassword: handleResetPassword,
     isTrialActive,
     trialDaysRemaining,
   };

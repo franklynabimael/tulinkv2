@@ -13,7 +13,7 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(_cookiesToSet) {
           // We can't set cookies in RSC, but we need this for the client
           // The client-side will handle cookie updates
         },

@@ -9,6 +9,7 @@ interface FormErrors {
   name?: string;
   email?: string;
   password?: string;
+  confirmPassword?: string;
 }
 
 export default function RegistroPage() {
@@ -18,6 +19,7 @@ export default function RegistroPage() {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [touchedFields, setTouchedFields] = useState<Record<string, boolean>>({});
@@ -41,6 +43,10 @@ export default function RegistroPage() {
       case "password":
         if (!value.trim()) return "La contraseña es requerida";
         if (value.length < 6) return "Mínimo 6 caracteres";
+        return undefined;
+      case "confirmPassword":
+        if (!value.trim()) return "Debes confirmar la contraseña";
+        if (value !== formData.password) return "Las contraseñas no coinciden";
         return undefined;
       default:
         return undefined;
@@ -82,6 +88,7 @@ export default function RegistroPage() {
         name: true,
         email: true,
         password: true,
+        confirmPassword: true,
       });
       return;
     }
@@ -225,6 +232,43 @@ export default function RegistroPage() {
                 <p id="password-error" className="mt-2 text-sm text-[#EF4444] flex items-center gap-1.5 animate-scale-in">
                   <i className="fas fa-exclamation-circle text-xs"></i>
                   {formErrors.password}
+                </p>
+              )}
+            </div>
+
+            {/* Confirm Password Field */}
+            <div>
+              <label htmlFor="confirmPassword" className="form-label">
+                Confirmar contraseña
+              </label>
+              <div className="relative">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  onBlur={() => handleFieldBlur("confirmPassword")}
+                  className={`input-interactive pr-12 ${
+                    touchedFields.confirmPassword && formErrors.confirmPassword ? "border-[#EF4444]" : ""
+                  }`}
+                  placeholder="Repite tu contraseña"
+                  aria-invalid={touchedFields.confirmPassword && !!formErrors.confirmPassword}
+                  aria-describedby={formErrors.confirmPassword ? "confirm-password-error" : undefined}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#2ECC71] transition-colors"
+                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  <i className={`fas fa-${showPassword ? "eye-slash" : "eye"}`}></i>
+                </button>
+              </div>
+              {touchedFields.confirmPassword && formErrors.confirmPassword && (
+                <p id="confirm-password-error" className="mt-2 text-sm text-[#EF4444] flex items-center gap-1.5 animate-scale-in">
+                  <i className="fas fa-exclamation-circle text-xs"></i>
+                  {formErrors.confirmPassword}
                 </p>
               )}
             </div>

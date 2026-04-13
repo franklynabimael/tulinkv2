@@ -1,11 +1,43 @@
+import { createServerClient } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
-import { createMiddlewareClient } from '@/lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  const res = NextResponse.next();
-  const supabase = await createMiddlewareClient();
+  // Create response that we'll eventually return
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
 
-  // Refresh session if expired - required for Server Components
+  // Create Supabase client with proper cookie handling for middleware
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          // Update request cookies (for subsequent middleware calls in chain)
+          cookiesToSet.forEach(({ name, value, options }) => {
+            request.cookies.set({ name, value, ...options });
+          });
+          // Update response cookies (sent to browser)
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          });
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set({ name, value, ...options });
+          });
+        },
+      },
+    }
+  );
+
+  // Get session - this may refresh expired tokens
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -25,7 +57,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  return res;
+  return response;
 }
 
 export const config = {
